@@ -63,7 +63,7 @@ const CartPage = () => {
                         <span>Total</span>
                         <span>${cartTotal.toFixed(2)}</span>
                     </div>
-                    <button className="checkout-btn">Proceed to Checkout</button>
+                    <Link to="/checkout" className="checkout-btn">Proceed to Checkout</Link>
                     <p className="secure-text">🔒 100% Secure Checkout</p>
                 </div>
             </div>

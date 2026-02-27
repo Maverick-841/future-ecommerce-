@@ -2,13 +2,17 @@ import React, { useState } from 'react';
 import ProductCard from '../components/ProductCard';
 import { products, categories } from '../data/products';
 import './HomePage.css';
+import { useCart } from '../context/CartContext';
 
 const HomePage = () => {
+    const { searchQuery } = useCart();
     const [activeCategory, setActiveCategory] = useState('All');
 
-    const filteredProducts = activeCategory === 'All'
-        ? products
-        : products.filter(p => p.category === activeCategory);
+    const filteredProducts = products.filter(p => {
+        const matchesCategory = activeCategory === 'All' || p.category === activeCategory;
+        const matchesSearch = p.title.toLowerCase().includes(searchQuery.toLowerCase());
+        return matchesCategory && matchesSearch;
+    });
 
     return (
         <div className="home-page animate-fade-in">

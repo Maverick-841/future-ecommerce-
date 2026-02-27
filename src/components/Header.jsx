@@ -4,16 +4,23 @@ import { useCart } from '../context/CartContext';
 import './Header.css';
 
 const Header = () => {
-    const { cartCount } = useCart();
-    const [search, setSearch] = useState('');
+    const { cartCount, searchQuery, setSearchQuery } = useCart();
     const navigate = useNavigate();
 
-    const handleSearch = (e) => {
-        e.preventDefault();
-        if (search.trim()) {
-            // Search logic would go here
-            console.log('Searching for:', search);
+    const handleSearchChange = (e) => {
+        setSearchQuery(e.target.value);
+        if (window.location.pathname !== '/') {
+            navigate('/');
         }
+    };
+
+    // The form's onSubmit will now just prevent default to avoid page reload,
+    // as search logic is handled by handleSearchChange on input.
+    const handleSearchSubmit = (e) => {
+        e.preventDefault();
+        // If there's a need for a separate action on submit (e.g., filtering results),
+        // it would go here. For now, the search is reactive to input changes.
+        console.log('Search submitted for:', searchQuery);
     };
 
     return (
@@ -24,12 +31,12 @@ const Header = () => {
                     <span className="logo-text">Antigravity<span>Store</span></span>
                 </Link>
 
-                <form onSubmit={handleSearch} className="search-bar">
+                <form onSubmit={handleSearchSubmit} className="search-bar">
                     <input
                         type="text"
                         placeholder="Search for premium products..."
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
+                        value={searchQuery}
+                        onChange={handleSearchChange}
                     />
                     <button type="submit" className="search-btn">
                         🔍

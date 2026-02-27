@@ -3,6 +3,8 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
+    const [searchQuery, setSearchQuery] = useState('');
+
     const [cart, setCart] = useState(() => {
         const savedCart = localStorage.getItem('cart');
         return savedCart ? JSON.parse(savedCart) : [];
@@ -55,6 +57,8 @@ export const CartProvider = ({ children }) => {
                 clearCart,
                 cartCount,
                 cartTotal,
+                searchQuery,
+                setSearchQuery,
             }}
         >
             {children}
