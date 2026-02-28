@@ -1,5 +1,4 @@
-export const products = [
-    // Previous Products (1-6)
+const initialProducts = [
     {
         id: 1,
         title: "Quantum Phone Ultra",
@@ -59,11 +58,9 @@ export const products = [
         rating: 4.6,
         image: "https://images.unsplash.com/photo-1622979135225-d2ba269cf1ac?q=80&w=2000&auto=format&fit=crop",
         description: "Step into new worlds with stunning 8K resolution and intuitive hand-tracking."
-    },
-    // Scale to 50+ New Products
+    }
 ];
 
-// Dynamically generate remaining products to reach 55 total
 const categoriesList = ["Smartphones", "Audio", "Wearables", "Tablets", "Computers", "VR/AR", "Cameras", "Accessories"];
 const descriptions = [
     "Premium quality hardware with sleek aesthetics.",
@@ -84,6 +81,7 @@ const images = [
     "https://images.unsplash.com/photo-1524670410485-78c778f219d4?q=80&w=1000"
 ];
 
+const generatedProducts = [];
 for (let i = 7; i <= 55; i++) {
     const category = categoriesList[i % categoriesList.length];
     const price = parseFloat((Math.random() * 500 + 49).toFixed(2));
@@ -91,7 +89,7 @@ for (let i = 7; i <= 55; i++) {
     const discount = hasDiscount ? Math.floor(Math.random() * 20 + 5) : null;
     const oldPrice = hasDiscount ? parseFloat((price / (1 - discount / 100)).toFixed(2)) : null;
 
-    products.push({
+    generatedProducts.push({
         id: i,
         title: `${category} Model ${String.fromCharCode(65 + (i % 26))}${i}`,
         category: category,
@@ -104,4 +102,5 @@ for (let i = 7; i <= 55; i++) {
     });
 }
 
+export const products = [...initialProducts, ...generatedProducts];
 export const categories = ["All", ...categoriesList];
