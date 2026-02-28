@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
 import './Header.css';
 
 const Header = () => {
     const { cartCount, searchQuery, setSearchQuery } = useCart();
+    const { user, logout } = useAuth();
     const navigate = useNavigate();
+
+    const handleLogout = () => {
+        logout();
+        navigate('/');
+    };
 
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
@@ -45,6 +52,14 @@ const Header = () => {
 
                 <nav className="nav-links">
                     <Link to="/" className="nav-link">Home</Link>
+                    {user ? (
+                        <div className="user-menu">
+                            <span className="user-name">Hi, {user.name.split(' ')[0]}</span>
+                            <button onClick={handleLogout} className="nav-link logout-btn">Logout</button>
+                        </div>
+                    ) : (
+                        <Link to="/login" className="nav-link">Login</Link>
+                    )}
                     <Link to="/cart" className="cart-icon-wrapper">
                         <span className="cart-icon">🛒</span>
                         {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}

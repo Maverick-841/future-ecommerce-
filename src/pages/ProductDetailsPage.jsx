@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { products } from '../data/products';
 import { useCart } from '../context/CartContext';
 import './ProductDetailsPage.css';
@@ -7,6 +7,7 @@ import './ProductDetailsPage.css';
 const ProductDetailsPage = () => {
     const { id } = useParams();
     const { addToCart } = useCart();
+    const navigate = useNavigate();
     const product = products.find(p => p.id === parseInt(id));
 
     if (!product) {
@@ -47,7 +48,7 @@ const ProductDetailsPage = () => {
                         <button className="add-btn" onClick={() => addToCart(product)}>
                             Add to Cart
                         </button>
-                        <button className="buy-btn">Buy It Now</button>
+                        <button className="buy-btn" onClick={handleBuyNow}>Buy It Now</button>
                     </div>
 
                     <div className="details-features">

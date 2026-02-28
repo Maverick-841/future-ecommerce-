@@ -81,6 +81,26 @@
     color: var(--primary);
 }
 
+.user-menu {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.user-name {
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.logout-btn {
+    font-size: 0.95rem;
+    background: transparent;
+    color: var(--text-secondary);
+    border: none;
+    padding: 0;
+}
+
 .cart-icon-wrapper {
     position: relative;
     display: flex;

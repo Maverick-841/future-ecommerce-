@@ -14,7 +14,8 @@ const CheckoutPage = () => {
         zip: '',
         cardNumber: '',
         expiry: '',
-        cvv: ''
+        cvv: '',
+        paymentMethod: 'card'
     });
 
     const handleChange = (e) => {
@@ -62,20 +63,55 @@ const CheckoutPage = () => {
 
                     <section className="form-section">
                         <h2>Payment Method</h2>
-                        <div className="form-group">
-                            <label>Card Number</label>
-                            <input type="text" name="cardNumber" required value={formData.cardNumber} onChange={handleChange} placeholder="0000 0000 0000 0000" />
+                        <div className="payment-options">
+                            <label className={`payment-option ${formData.paymentMethod === 'card' ? 'active' : ''}`}>
+                                <input type="radio" name="paymentMethod" value="card" checked={formData.paymentMethod === 'card'} onChange={handleChange} />
+                                <span className="option-label">💳 Credit/Debit Card</span>
+                            </label>
+                            <label className={`payment-option ${formData.paymentMethod === 'phonepe' ? 'active' : ''}`}>
+                                <input type="radio" name="paymentMethod" value="phonepe" checked={formData.paymentMethod === 'phonepe'} onChange={handleChange} />
+                                <span className="option-label">📱 PhonePe / UPI</span>
+                            </label>
+                            <label className={`payment-option ${formData.paymentMethod === 'cod' ? 'active' : ''}`}>
+                                <input type="radio" name="paymentMethod" value="cod" checked={formData.paymentMethod === 'cod'} onChange={handleChange} />
+                                <span className="option-label">💵 Cash on Delivery</span>
+                            </label>
                         </div>
-                        <div className="form-row">
-                            <div className="form-group">
-                                <label>Expiry Date</label>
-                                <input type="text" name="expiry" required value={formData.expiry} onChange={handleChange} placeholder="MM/YY" />
+
+                        {formData.paymentMethod === 'card' && (
+                            <div className="card-details animate-fade-in">
+                                <div className="form-group">
+                                    <label>Card Number</label>
+                                    <input type="text" name="cardNumber" required value={formData.cardNumber} onChange={handleChange} placeholder="0000 0000 0000 0000" />
+                                </div>
+                                <div className="form-row">
+                                    <div className="form-group">
+                                        <label>Expiry Date</label>
+                                        <input type="text" name="expiry" required value={formData.expiry} onChange={handleChange} placeholder="MM/YY" />
+                                    </div>
+                                    <div className="form-group">
+                                        <label>CVV</label>
+                                        <input type="password" name="cvv" required value={formData.cvv} onChange={handleChange} placeholder="***" />
+                                    </div>
+                                </div>
                             </div>
-                            <div className="form-group">
-                                <label>CVV</label>
-                                <input type="password" name="cvv" required value={formData.cvv} onChange={handleChange} placeholder="***" />
+                        )}
+
+                        {formData.paymentMethod === 'phonepe' && (
+                            <div className="upi-details animate-fade-in">
+                                <div className="form-group">
+                                    <label>UPI ID</label>
+                                    <input type="text" name="upiId" required placeholder="user@ybl" />
+                                    <p className="helper-text">Scan QR on the next screen or enter UPI ID</p>
+                                </div>
                             </div>
-                        </div>
+                        )}
+
+                        {formData.paymentMethod === 'cod' && (
+                            <div className="cod-details animate-fade-in">
+                                <p>Pay with cash upon delivery. No advance payment required.</p>
+                            </div>
+                        )}
                     </section>
 
                     <button type="submit" className="place-order-btn">Place Order</button>
